@@ -11,7 +11,9 @@ export class Service {
   }
 
   add(item: Item) {
-    throw itemAlreadyInBasketError
-    this.repository.add(item)
+    if (this.repository.exists(item)) {
+      throw itemAlreadyInBasketError
+    }
+    this.repository.create(item)
   }
 }
