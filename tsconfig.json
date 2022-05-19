@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+      "outDir": "./dist/",
+      "sourceMap": true,
+      "module": "ES6",
+      "target": "ES6",
+      "baseUrl": "./src/",
+      "skipLibCheck": true,
+      "allowSyntheticDefaultImports": true
+  },
+  "include": [
+      "./src/**/*"
+  ]
+}
