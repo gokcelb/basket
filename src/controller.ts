@@ -1,5 +1,5 @@
 import Express, { request } from 'express'
-import { Service } from './service.js'
+import { Service, itemCouldNotBeDeletedError, itemNotInBasketError } from './service.js'
 import { Item } from './model.js'
 
 export class Controller {
@@ -9,14 +9,28 @@ export class Controller {
     this.service = service
   }
 
-  add(req: Express.Request, res: Express.Response): void {
+  public add(req: Express.Request, res: Express.Response): void {
     const item = this.reqBodyToItem(req)
     try {
       this.service.add(item)
       res.json(item)
     } catch(e) {
       console.error(e)
-      res.status(500).json({"msg": e.message})
+      res.status(500).json({ "msg": e.message })
+    }
+  }
+
+  public remove(req: Express.Request, res: Express.Response): void {
+    const itemId = parseInt(req.params.id)
+    try {
+      this.service.remove(itemId)
+    } catch(e) {
+      console.error(e)
+      if (e == itemCouldNotBeDeletedError) {
+        res.status(500).json({ "msg": e.message })
+      } else if (e == itemNotInBasketError) {
+        res.status(404).json({ "msg": e.message })
+      }
     }
   }
 
