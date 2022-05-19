@@ -11,11 +11,11 @@ export class ItemRepository {
     this.db[item.id] = item
   }
 
-  public delete(item: Item): boolean {
-    return delete this.db[item.id]
+  public delete(itemId: number): boolean {
+    return delete this.db[itemId]
   }
 
-  public exists(item: Item): boolean {
-    return item.id in this.db
+  public exists(itemId: number): boolean {
+    return itemId in this.db
   }
 }

@@ -2,8 +2,8 @@ import { Item } from './model.js'
 import { ItemRepository } from './repository.js'
 
 const itemAlreadyInBasketError = new Error('Item already in basket.')
-const itemNotInBasketError = new Error('Item not in basket.')
-const itemCouldNotBeDeletedError = new Error('Item could not be deleted.')
+export const itemNotInBasketError = new Error('Item not in basket.')
+export const itemCouldNotBeDeletedError = new Error('Item could not be deleted.')
 
 export class Service {
   private repository: ItemRepository
@@ -13,18 +13,18 @@ export class Service {
   }
 
   public add(item: Item): void {
-    if (this.repository.exists(item)) {
+    if (this.repository.exists(item.id)) {
       throw itemAlreadyInBasketError
     }
     this.repository.create(item)
   }
 
-  public remove(item: Item): void {
-    if (!this.repository.exists(item)) {
+  public remove(itemId: number): void {
+    if (!this.repository.exists(itemId)) {
       throw itemNotInBasketError
     }
 
-    const deletionSuccessful = this.repository.delete(item)
+    const deletionSuccessful = this.repository.delete(itemId)
     if (!deletionSuccessful) {
       throw itemCouldNotBeDeletedError
     }
