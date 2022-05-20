@@ -79,4 +79,15 @@ describe('Service', () => {
       }
     })
   })
+
+  describe('show', () => {
+    test('calls ItemRepository readAll method', () => {
+      when(mockRepo.readAll()).thenReturn([])
+
+      const service = new Service(instance(mockRepo))
+      const items = service.show()
+
+      expect(items).toHaveLength(0)
+    })
+  })
 })

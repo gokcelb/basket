@@ -15,6 +15,14 @@ export class ItemRepository {
     return delete this.db[itemId]
   }
 
+  public readAll(): Item[] {
+    const items = [] as Item[]
+    for (let item in this.db) {
+      items.push(this.db[item])
+    }
+    return items
+  }
+
   public exists(itemId: number): boolean {
     return itemId in this.db
   }

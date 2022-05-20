@@ -29,4 +29,8 @@ export class Service {
       throw itemCouldNotBeDeletedError
     }
   }
+
+  public show(): Item[] {
+    return this.repository.readAll()
+  }
 }

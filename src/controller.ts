@@ -1,4 +1,4 @@
-import Express, { request } from 'express'
+import Express from 'express'
 import { Service, itemCouldNotBeDeletedError, itemNotInBasketError } from './service.js'
 import { Item } from './model.js'
 
@@ -13,7 +13,7 @@ export class Controller {
     const item = this.reqBodyToItem(req)
     try {
       this.service.add(item)
-      res.json(item)
+      res.status(201).json(item)
     } catch(e) {
       console.error(e)
       res.status(500).json({ "msg": e.message })
@@ -24,6 +24,7 @@ export class Controller {
     const itemId = parseInt(req.params.id)
     try {
       this.service.remove(itemId)
+      res.status(204).send()
     } catch(e) {
       console.error(e)
       if (e == itemCouldNotBeDeletedError) {
@@ -32,6 +33,10 @@ export class Controller {
         res.status(404).json({ "msg": e.message })
       }
     }
+  }
+
+  public show(req: Express.Request, res: Express.Response): void {
+    res.json(this.service.show())
   }
 
   private reqBodyToItem(req: Express.Request): Item {
