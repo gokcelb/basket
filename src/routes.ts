@@ -10,14 +10,6 @@ const ctrl = new Controller(svc)
 export const app = express()
 app.use(express.json())
 
-app.get('/', (req, res) => {
-  res.send(hello())
-})
-
-function hello(): string {
-  return 'Hello World! Hi!'
-}
-
 app.post('/items', (req, res) => {
   ctrl.add(req, res)
 })
